@@ -2,8 +2,9 @@
 // Released under the GPLv3 license to match the rest of the
 // Adafruit NeoPixel library
 
-#include <Arduino.h>
+
 #include <Adafruit_NeoPixel.h>
+#include <Arduino.h>
 
 #ifdef __AVR__
 
@@ -11,7 +12,7 @@
 #endif
 
 // Which pin on the Arduino is connected to the NeoPixels?
-#define PIN D6 // On Trinket or Gemma, suggest changing this to 1
+#define PIN 6 // On Trinket or Gemma, suggest changing this to 1
 
 // How many NeoPixels are attached to the Arduino?
 #define NUMPIXELS 128 // Popular NeoPixel ring size
@@ -207,7 +208,7 @@ uint32_t Wheel(byte WheelPos)
 
 
 // turn on the right lights for the numbers
-void rel(int offset, int select, int r, int g, int b) // choose 1 of 5 positions, select one number, set the RGB Color(range 0 -255 each) 
+void setDigit(int offset, int select, int r, int g, int b) // choose 1 of 5 positions, select one number, set the RGB Color(range 0 -255 each) 
 {                                                     // 0 - 4; 4 is only for ":"
   //calculate the right position
   int place;
@@ -389,11 +390,11 @@ void loop()
   //rainbow(10);
   //rainbowCycle(5);
   Serial.println("Funktioniert");
-  rel(0, 1, 0,150, 0);
-  rel(1, 0, 0, 150, 0);
-  rel(2, 0, 0, 150, 0);
-  rel(3, 0, 0, 150, 0);
-  rel(4, -1, 0,150, 0);
+  setDigit(0, 1, 0,150, 0);
+  setDigit(1, 0, 0, 150, 0);
+  setDigit(2, 0, 0, 150, 0);
+  setDigit(3, 0, 0, 150, 0);
+  setDigit(4, -1, 0,150, 0);
 
   displ(true);
   pixels.show();
