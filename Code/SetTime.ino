@@ -1,0 +1,46 @@
+#include <Wire.h>
+#include <ds3231.h>
+
+ts t; //ts is a struct findable in ds3231.h
+
+void setup() {
+  Wire.begin(); //start i2c (required for connection)
+  DS3231_init(DS3231_INTCN); //register the ds3231 (DS3231_INTCN is the default address of ds3231, this is set by macro for no performance loss)
+  Serial.begin(9600);
+  while(!Serial){} //only need for leonardo
+  
+  t.year = 2020;
+  t.mon = 1;
+  t.mday = 22;
+  t.hour = 16;
+  t.min = 14;
+  t.sec = 10;
+  t.wday = 2;
+  DS3231_set(t);
+  
+}
+
+void loop() {
+  DS3231_get(&t); //get the value and pass to the function the pointer to t, that make an lower memory fingerprint and faster execution than use return
+  //DS3231_get() will use the pointer of t to directly change t value (faster, lower memory used)
+  Serial.print("Day : ");
+  Serial.print(t.mon); //just print some data
+  Serial.print("/");
+  Serial.print(t.mday);
+  Serial.print("/");
+  Serial.println(t.year);
+  Serial.print("Hour : ");
+  Serial.print(t.hour);
+  Serial.print(":");
+  Serial.print(t.min);
+  Serial.print(".");
+  Serial.println(t.sec);
+  Serial.println("\nWeekday");
+  Serial.println(t.wday);
+#ifdef CONFIG_UNIXTIME
+  Serial.print("Timestamp : ");
+  Serial.print(t.unixtime);
+#endif
+  Serial.println();
+  delay(1000);
+}
